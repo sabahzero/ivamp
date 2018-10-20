@@ -1,2 +1,3 @@
-# ivamp
-This is the beta version of the Initiative for Venom Associated Microbes and Parasites (iVAMP). To join, subscribe to our listserv (ivamp@googlegroups.com). Contact: Sabah Ul-Hasan (bysabahulhasan@gmail.com)
+# sabahzero.github.io/ivamp/
+
+This how to make the Initative of Venom Associated Microbes and Parasites website and database ＼(^o^)／
