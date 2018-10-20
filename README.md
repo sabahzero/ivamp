@@ -1,3 +1,3 @@
-# sabahzero.github.io/ivamp/
+# iVAMP website and database: beta version sabahzero.github.io/ivamp/
 
 This how to make the Initative of Venom Associated Microbes and Parasites website and database ＼(^o^)／
