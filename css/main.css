@@ -3,7 +3,7 @@ body {
     width: 85%;
 }
 nav ul, footer ul {
-    font-size: 1.5em;
+    font-size: 1.25em;
     font-family:'Helvetica', 'Helvetica', 'Helvetica';
     padding: 0px;
     list-style: none;
@@ -15,7 +15,8 @@ nav ul li, footer ul li {
 }
 a {
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1.25em;
+    font-family:'Helvetica', 'Helvetica', 'Helvetica';
     color: #1d91c0;
 }
 a:hover {
@@ -23,17 +24,18 @@ a:hover {
     color: #2e282a;
 }
 h1 {
-    font-size: 1.5em;
+    font-size: 2em;
     font-family:'Helvetica', 'Helvetica', 'Helvetica';
 }
 p {
-    font-size: 1em;
+    font-size: 1.5em;
+    font-family:'Helvetica', 'Helvetica', 'Helvetica';
     line-height: 1.4em;
     color: #2b2b28;
 }
 footer {
     border-top: 1px solid 
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 ul.posts { 
