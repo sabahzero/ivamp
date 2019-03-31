@@ -1,0 +1,133 @@
+---
+title: "Supplemental Code for Toxicon Correspondence (iVAMP)"
+author: "Ul-Hasan et al"
+output: word_document
+---
+
+Contributors to literature review (by order): SU, ERR, VH, TJC, CNK, SAT, SAM  
+Contributors to code: SU 
+
+Methods:
+Web of Science search of all 71,738,518 peer-reviewed publications
+TITLE: (venom* AND microb*) OR TITLE: (venom* AND bacteria*) OR TITLE: (venom* AND fungi*) OR TITLE: (venom* AND virus*)
+Timespan=All years. Indexes=SCI-EXPANDED, SSCI, A&HCI, CPCI-S, CPCI-SSH, BKCI-S, BKCI-SSH, ESCI, CCR-EXPANDED, IC.
+
+Results                       129 hits
+  Abstract removed            2 (127 included in analysis)
+Sum of the Times Cited        1833
+Average Citations per Item    14.21
+h-index                       23
+
+Microbe, Topic, and Animal columns were added manually
+
+Upload Web of Science search output, clean-up, Figure 1a-c
+```{r}
+
+# Upload data
+# setwd("~/Desktop/MS_iVAMP-Correspondence/ToxiconX_Correspondence-Final") # update to Github repo when final (after reviews)
+Raw = read.csv("Supp_Tab1_Web-of-Science_Raw-Feb10-2019.csv")
+
+# install.packages("wordcloud")
+library(wordcloud)
+# packageVersion("wordcloud") # v2.6
+
+# Figure 1a: Microbe categories
+Microbe = wordcloud(Raw$Microbe) 
+Microbe # None category are studies with term 'microb*' that refer to wasp microbracon
+dev.copy(png, "Figure1a_Microbe_127-articles.png")
+dev.off() 
+
+# Remove all articles for "none" category
+Microbe_only = subset(Raw, !(Raw$Microbe=="none")) # 17 articles removed (110 remain)
+# Figure 1b: Article topic
+Topic = wordcloud(Microbe_only$Topic) 
+Topic # 77 antimicrobial, 11 symbiosis
+dev.copy(png, "Figure1b_Topic_110-articles.png")
+dev.off() 
+
+(77/110)*100 # 70 % antimicrobial
+(11/110)*100 # 10 % symbiosis
+
+# Figure 1c: Animal of origin
+Animal = wordcloud(Microbe_only$Animal) 
+Animal # 77 antimicrobial, 11 symbiosis
+dev.copy(png, "Figure1c_Animal_110-articles.png")
+dev.off() 
+
+(58/110)*100 # 53 % from snakes, 47% from intevertebrates
+
+```
+
+Superfluous Analyses
+```{r}
+
+# install.packages("tidyverse")
+library(tidyverse)
+# packageVersion("tidyverse") # v1.2.1
+
+# install.packages("tidytext")
+library(tidytext)
+# packageVersion("tidytext") # v0.2.0
+
+# install.packages("tm")
+library(tm)
+# packageVersion("tm") # v0.7.6
+
+# install.packages("slam")
+library(slam)
+# packageVersion("slam") # v0.1.44
+
+# Make the following columns all lower case
+Raw$Title = tolower(Raw$Title) 
+Raw$Authors = tolower(Raw$Authors)
+Raw$Book_Editors = tolower(Raw$Book_Editors)
+Raw$Source_Title = tolower(Raw$Source_Title)
+# Remove punctuation from these 
+Title = Raw$Title %>%
+  str_replace_all('[^a-z0-9]+', ' ')
+Title = data.frame(Title)
+Authors = Raw$Authors %>%
+  str_replace_all('[^a-z0-9]+', ' ')
+Authors = data.frame(Authors)
+Book_Editors = Raw$Book_Editors %>%
+  str_replace_all('[^a-z0-9]+', ' ')
+Book_Editors = data.frame(Book_Editors)
+Source_Title = Raw$Source_Title %>%
+  str_replace_all('[^a-z0-9]+', ' ')
+Source_Title = data.frame(Source_Title)
+
+NoPunc = cbind(Title, Authors, Book_Editors, Source_Title)
+NoPunc$Article = Raw$Article
+NoPunc_Annot = merge(NoPunc, Raw, by = "Article")
+NoPunc_Annot = NoPunc_Annot[,-c(6:9)] # drops columns with punctuation
+
+# Convert all months to string value
+NoPunc_Annot_New = NoPunc_Annot %>% mutate(Publication_Month=
+ifelse(Publication_Month == 1 , "JAN",
+ifelse(Publication_Month == "JAN" , "JAN",
+ifelse(Publication_Month == 2 , "FEB",  
+ifelse(Publication_Month == "FEB" , "FEB",
+ifelse(Publication_Month == 3 , "MAR",
+ifelse(Publication_Month == "MAR" , "MAR",
+ifelse(Publication_Month == 4 , "APR",
+ifelse(Publication_Month == "APR" , "APR",
+ifelse(Publication_Month == 5 , "MAY",
+ifelse(Publication_Month == "MAY" , "MAY",
+ifelse(Publication_Month == 6 , "JUN",
+ifelse(Publication_Month == "JUN" , "JUN",
+ifelse(Publication_Month == 7 , "JUL",
+ifelse(Publication_Month == "JUL" , "JUL",
+ifelse(Publication_Month == 8 , "AUG",
+ifelse(Publication_Month == "AUG" , "AUG",
+ifelse(Publication_Month == 9 , "SEP",
+ifelse(Publication_Month == "SEP" , "SEP",
+ifelse(Publication_Month == 10 , "OCT",
+ifelse(Publication_Month == "OCT" , "OCT",
+ifelse(Publication_Month == 11 , "NOV",
+ifelse(Publication_Month == "NOV" , "NOV",
+ifelse(Publication_Month == 12 , "DEC",
+ifelse(Publication_Month == "DEC" , "DEC",
+              "")))))))))))))))))))))))))
+
+```
+   
