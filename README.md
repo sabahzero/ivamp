@@ -1,5 +1,7 @@
 # iVAMP website and database
 
-This how to make the Initative of Venom Associated Microbes and Parasites website and database ＼(^o^)／
+We've relocated </br>
+https://ivamp-consortium.github.io/
 
-Beta version [sabahzero.github.io/ivamp/](https://sabahzero.github.io/ivamp/)
+Data repository </br>
+https://github.com/ivamp-consortium
